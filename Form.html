@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+      <base target="_top">
+    </head>
+    <body>
+      <h1 style="font-family:Roboto"> Daily Pallet Report</h1>
+        <label style="font-family:Roboto;font-weight:bold" for="location">Location #:</label><br>
+        <input type="number" style="font-size: 22pt; font-weight:bold;background-color:rgb(255, 255, 0)" min="0" max="9999" id="location" location="location">
+   <br>
+      <br>
+      </br>
+    </br>
+<table cellspacing="0" cellpadding="0" dir="ltr" style="table-layout:fixed;font-size:10pt;font-family:Arial;width:0px">
+   <colgroup>
+      <col width="133">
+      <col width="120">
+      <col width="122">
+   </colgroup>
+   <tbody>
+      <tr style="height:33px">
+         <td style="border-width:3px 2px 2px;border-style:solid;border-color:rgb(230,145,56) rgb(230,145,56) rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:bottom;background-color:rgb(246,178,107);font-family:Roboto;font-size:17pt;font-weight:bold;text-align:center" rowspan="1" colspan="3">Opening Pallet Update</td>
+      </tr>
+      <tr style="height:50px">
+         <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px double rgb(0,0,0);border-left:2px solid rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle;font-family:Roboto;font-size:17pt;font-weight:bold;color:rgb(67,67,67);text-align:center">Pooler</td>
+         <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px double rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle;background-color:rgb(255,214,171);font-family:Roboto;font-size:14pt;font-weight:bold;color:rgb(67,67,67);text-align:center">Picked Up Yesterday</td>
+         <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px double rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle;background-color:rgb(255,214,171);font-family:Roboto;font-size:14pt;font-weight:bold;color:rgb(67,67,67);text-align:center">Pallets On Hand</td>
+      </tr>
+      <tr style="height:47px">
+         <td style="border-right:2px solid rgb(0,0,0);border-bottom:1px solid rgb(0,0,0);border-left:2px solid rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle;font-family:Roboto;font-size:23pt;font-weight:bold;color:rgb(158,51,14);text-align:center">LPR</td>
+         <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px double rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle"><input type= "number" style="font-size: 19pt;" min="0" max="9999" id="lprpu" lprpu="lprpu"></td>
+         <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px double rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle"><input type= "number" style="font-size: 19pt;" min="0" max="9999" id="lproh" lproh="lproh"></td>
+      </tr>
+      <tr style="height:47px">
+         <td style="border-right:2px solid rgb(0,0,0);border-bottom:1px solid rgb(0,0,0);border-left:2px solid rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle;font-family:Roboto;font-size:20pt;font-weight:bold;color:rgb(0,73,153);text-align:center">CHEP</td>
+         <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px double rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle"><input type= "number" style="font-size: 19pt;" min="0" max="9999" id="cheppu" cheppu="cheppu"></td>
+         <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px double rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle"><input type= "number" style="font-size: 19pt;" min="0" max="9999" id="chepoh" chepoh="chepoh"></td>
+      </tr>
+      <tr style="height:47px">
+         <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px solid rgb(0,0,0);border-left:2px solid rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle;font-family:Roboto;font-size:20pt;font-weight:bold;color:rgb(21,145,126);text-align:center">IPP</td>
+         <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px solid rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle"><input type= "number" style="font-size: 19pt;" min="0" max="9999" id="ipppu" ipppu="ipppu"></td>
+         <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px solid rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle"><input type= "number" style="font-size: 19pt;" min="0" max="9999" id="ippoh" ippoh="ippoh"></td>
+      </tr>
+   </tbody>
+</table>
+  <br>
+     <br>
+       <br>
+      <input type="button" style="font-family:Roboto; font-size: 25pt; font-weight:bold;" value="Submit" onclick="submitForm()"> 
+        <div style="font-size:19pt; font-weight:bold; font-family:Roboto; color:rgb(255,0,0);" overflow: hidden; id="message"></div>
+        </br>
+     </br>
+  </form>    
+       
+
+<?
+  <!-- var currUserEmail = Session.getActiveUser().getEmail(); -->
+       
+       var currDate = Utilities.formatDate(new Date(), "PST", "MM/dd/yyyy");              
+       
+       var spreadSheet = SpreadsheetApp.openById('1VGrDLFeybZh9W2vjTMis7HSo-xlC0ar-LSmKlq_fugI');
+       var contacts = spreadSheet.getSheetByName('Contacts');
+       var emList = contacts.getRange(3, 2, 1, 2).getDisplayValues();
+       var whsList = contacts.getRange(3, 2, 1, 1).getValues().join().split(',');
+     
+       var whsIndex = whsList.indexOf(whsList);
+
+?>
+
+      <script>
+        function submitForm() {
+          var location = document.getElementById('location').value;
+          var lprpu = document.getElementById('lprpu').value;
+          var lproh = document.getElementById('lproh').value;
+          var cheppu = document.getElementById('cheppu').value;
+          var chepoh = document.getElementById('chepoh').value;
+          var ipppu = document.getElementById('ipppu').value;
+          var ippoh = document.getElementById('ippoh').value;
+          google.script.run.processForm(location, lprpu, lproh, cheppu, chepoh, ipppu, ippoh); // Calls Apps Script function
+          document.getElementById('location').value = ''; // Clear form fields
+          document.getElementById('lprpu').value = '';
+          document.getElementById('lproh').value = '';          
+          document.getElementById('cheppu').value = '';
+          document.getElementById('chepoh').value = '';
+          document.getElementById('ipppu').value = '';
+          document.getElementById('ippoh').value = '';
+          
+          message.innerHTML = 'Success!'
+      
+          var htmlBody = HtmlService.createTemplateFromFile('OpeningE');
+          var spreadSheet = SpreadsheetApp.openById('1VGrDLFeybZh9W2vjTMis7HSo-xlC0ar-LSmKlq_fugI');
+          var contacts = spreadSheet.getSheetByName('Contacts');
+          var emList = contacts.getRange(3, 2, 1, 2).getDisplayValues();
+          var whsList = contacts.getRange(3, 2, 1, 1).getValues().join().split(',');
+          Logger.log(whs);
+          Logger.log(whsList);
+          var whsIndex = whsList.indexOf(whs);
+          Logger.log(whsIndex);
+          Logger.log(emList);
+          // Email list
+
+            // evaluate and get the html
+          var email_html = htmlBody.evaluate().getContent();
+          var toEmail = emList[whsIndex][i + 1];
+         
+          google.script.run.emailForm(location, lprpu, lproh);
+        
+
+
+        }
+      </script>
+    </body>
+ </html>
