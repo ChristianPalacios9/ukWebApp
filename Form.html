@@ -5,8 +5,12 @@
     </head>
     <body>
       <h1 style="font-family:Roboto"> Daily Pallet Report</h1>
-        <label style="font-family:Roboto;font-weight:bold" for="location">Location #:</label><br>
-        <input type="number" style="font-size: 22pt; font-weight:bold;background-color:rgb(255, 255, 0)" min="0" max="9999" id="location" location="location">
+      <form onsubmit ="return validateDropdown()">
+        <label style="font-family:Roboto;font-weight:bold" for="myDropdown">Location #:</label><br>
+        <select id="myDropdown"  name="option" style="font-size: 22pt; font-weight:bold;background-color:rgb(255, 255, 0)" required>
+        <option value="" disabled selected>Select</option>
+        </select>
+
    <br>
       <br>
       </br>
@@ -41,35 +45,40 @@
          <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px solid rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle"><input type= "number" style="font-size: 19pt;" min="0" max="9999" id="ipppu" ipppu="ipppu"></td>
          <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px solid rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle"><input type= "number" style="font-size: 19pt;" min="0" max="9999" id="ippoh" ippoh="ippoh"></td>
       </tr>
+
+          <? 
+       <!-- var currUserEmail = Session.getActiveUser().getEmail(); -->
+       
+       var currDate = Utilities.formatDate(new Date(), "PST", "MM/dd/yyyy");              
+       
+       var spreadSheet = SpreadsheetApp.openById('1XZgrqVEN2CyGZir9L2PDQwOD06yDs1lj5Pb57svyQpo');
+       
+       var contacts = spreadSheet.getSheetByName("Contacts");
+       var locNumbers = contacts.getRange('B3:B31').getValues();
+         ?>  
+
    </tbody>
 </table>
   <br>
      <br>
        <br>
-      <input type="button" style="font-family:Roboto; font-size: 25pt; font-weight:bold;" value="Submit" onclick="submitForm()"> 
+      <input type="submit" style="font-family:Roboto; font-size: 25pt; font-weight:bold;" value="Submit" onclick="submitForm()"> 
         <div style="font-size:19pt; font-weight:bold; font-family:Roboto; color:rgb(255,0,0);" overflow: hidden; id="message"></div>
         </br>
-     </br>
-  </form>    
-       
+      </br>
+    </br>
+  
 
-<?
-  <!-- var currUserEmail = Session.getActiveUser().getEmail(); -->
-       
-       var currDate = Utilities.formatDate(new Date(), "PST", "MM/dd/yyyy");              
-       
-       var spreadSheet = SpreadsheetApp.openById('1VGrDLFeybZh9W2vjTMis7HSo-xlC0ar-LSmKlq_fugI');
-       var contacts = spreadSheet.getSheetByName('Contacts');
-       var emList = contacts.getRange(3, 2, 1, 2).getDisplayValues();
-       var whsList = contacts.getRange(3, 2, 1, 1).getValues().join().split(',');
-     
-       var whsIndex = whsList.indexOf(whsList);
 
-?>
+
+      </form>
+
+
 
       <script>
         function submitForm() {
-          var location = document.getElementById('location').value;
+          var dropdown = document.getElementById('myDropdown');
+          var location = dropdown.value;
           var lprpu = document.getElementById('lprpu').value;
           var lproh = document.getElementById('lproh').value;
           var cheppu = document.getElementById('cheppu').value;
@@ -77,37 +86,49 @@
           var ipppu = document.getElementById('ipppu').value;
           var ippoh = document.getElementById('ippoh').value;
           google.script.run.processForm(location, lprpu, lproh, cheppu, chepoh, ipppu, ippoh); // Calls Apps Script function
-          document.getElementById('location').value = ''; // Clear form fields
+          document.getElementById('myDropdown').selectedIndex = 0;
           document.getElementById('lprpu').value = '';
           document.getElementById('lproh').value = '';          
           document.getElementById('cheppu').value = '';
           document.getElementById('chepoh').value = '';
           document.getElementById('ipppu').value = '';
           document.getElementById('ippoh').value = '';
-          
-          message.innerHTML = 'Success!'
-      
-          var htmlBody = HtmlService.createTemplateFromFile('OpeningE');
-          var spreadSheet = SpreadsheetApp.openById('1VGrDLFeybZh9W2vjTMis7HSo-xlC0ar-LSmKlq_fugI');
-          var contacts = spreadSheet.getSheetByName('Contacts');
-          var emList = contacts.getRange(3, 2, 1, 2).getDisplayValues();
-          var whsList = contacts.getRange(3, 2, 1, 1).getValues().join().split(',');
-          Logger.log(whs);
-          Logger.log(whsList);
-          var whsIndex = whsList.indexOf(whs);
-          Logger.log(whsIndex);
-          Logger.log(emList);
-          // Email list
 
-            // evaluate and get the html
-          var email_html = htmlBody.evaluate().getContent();
-          var toEmail = emList[whsIndex][i + 1];
-         
-          google.script.run.emailForm(location, lprpu, lproh);
+          message.innerHTML = 'Success!'
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+          google.script.run.withSuccessHandler(populateDropdown).getDropdownOptions();
+        });
+
+       
+        function populateDropdown(options) {
+          var dropdown = document.getElementById('myDropdown');
+          options.forEach(function(optionText) {
+            var option = document.createElement('option');
+            option.value = optionText;
+            option.textContent = optionText;
+            dropdown.appendChild(option);
+
+
+        });
+        }
+
+        document.addEventListener('submit', function(submitForm) {
+          var lprpu = document.getElementById('lprpu');
+          var lproh = document.getElementById('lproh');
+          var cheppu = document.getElementById('cheppu');
+          var chepoh = document.getElementById('chepoh');
+          var ipppu = document.getElementById('ipppu');
+          var ippoh = document.getElementById('ippoh');
+
+         if (lprpu.value.trim() === '' || lproh.value.trim() === '' || cheppu.value.trim() === '' || chepoh.value.trim() === '' || ipppu.value.trim() === '' || ippoh.value.trim() === '') {
+            alert('Please fill in all required fields.');
+            event.preventDefault(); // Prevent form submission
+  }
+});
         
 
-
-        }
       </script>
     </body>
  </html>
