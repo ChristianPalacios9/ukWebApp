@@ -1,134 +1,51 @@
-<!DOCTYPE html>
-    <html>
-    <head>
-      <base target="_top">
-    </head>
-    <body>
-      <h1 style="font-family:Roboto"> Daily Pallet Report</h1>
-      <form onsubmit ="return validateDropdown()">
-        <label style="font-family:Roboto;font-weight:bold" for="myDropdown">Location #:</label><br>
-        <select id="myDropdown"  name="option" style="font-size: 22pt; font-weight:bold;background-color:rgb(255, 255, 0)" required>
-        <option value="" disabled selected>Select</option>
-        </select>
-
-   <br>
-      <br>
-      </br>
-    </br>
-<table cellspacing="0" cellpadding="0" dir="ltr" style="table-layout:fixed;font-size:10pt;font-family:Arial;width:0px">
-   <colgroup>
-      <col width="133">
-      <col width="120">
-      <col width="122">
-   </colgroup>
-   <tbody>
-      <tr style="height:33px">
-         <td style="border-width:3px 2px 2px;border-style:solid;border-color:rgb(230,145,56) rgb(230,145,56) rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:bottom;background-color:rgb(246,178,107);font-family:Roboto;font-size:17pt;font-weight:bold;text-align:center" rowspan="1" colspan="3">Opening Pallet Update</td>
-      </tr>
-      <tr style="height:50px">
-         <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px double rgb(0,0,0);border-left:2px solid rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle;font-family:Roboto;font-size:17pt;font-weight:bold;color:rgb(67,67,67);text-align:center">Pooler</td>
-         <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px double rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle;background-color:rgb(255,214,171);font-family:Roboto;font-size:14pt;font-weight:bold;color:rgb(67,67,67);text-align:center">Picked Up Yesterday</td>
-         <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px double rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle;background-color:rgb(255,214,171);font-family:Roboto;font-size:14pt;font-weight:bold;color:rgb(67,67,67);text-align:center">Pallets On Hand</td>
-      </tr>
-      <tr style="height:47px">
-         <td style="border-right:2px solid rgb(0,0,0);border-bottom:1px solid rgb(0,0,0);border-left:2px solid rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle;font-family:Roboto;font-size:23pt;font-weight:bold;color:rgb(158,51,14);text-align:center">LPR</td>
-         <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px double rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle"><input type= "number" style="font-size: 19pt;" min="0" max="9999" id="lprpu" lprpu="lprpu"></td>
-         <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px double rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle"><input type= "number" style="font-size: 19pt;" min="0" max="9999" id="lproh" lproh="lproh"></td>
-      </tr>
-      <tr style="height:47px">
-         <td style="border-right:2px solid rgb(0,0,0);border-bottom:1px solid rgb(0,0,0);border-left:2px solid rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle;font-family:Roboto;font-size:20pt;font-weight:bold;color:rgb(0,73,153);text-align:center">CHEP</td>
-         <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px double rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle"><input type= "number" style="font-size: 19pt;" min="0" max="9999" id="cheppu" cheppu="cheppu"></td>
-         <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px double rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle"><input type= "number" style="font-size: 19pt;" min="0" max="9999" id="chepoh" chepoh="chepoh"></td>
-      </tr>
-      <tr style="height:47px">
-         <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px solid rgb(0,0,0);border-left:2px solid rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle;font-family:Roboto;font-size:20pt;font-weight:bold;color:rgb(21,145,126);text-align:center">IPP</td>
-         <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px solid rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle"><input type= "number" style="font-size: 19pt;" min="0" max="9999" id="ipppu" ipppu="ipppu"></td>
-         <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px solid rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle"><input type= "number" style="font-size: 19pt;" min="0" max="9999" id="ippoh" ippoh="ippoh"></td>
-      </tr>
-
-          <? 
-       <!-- var currUserEmail = Session.getActiveUser().getEmail(); -->
-       
-       var currDate = Utilities.formatDate(new Date(), "PST", "MM/dd/yyyy");              
-       
-       var spreadSheet = SpreadsheetApp.openById('1XZgrqVEN2CyGZir9L2PDQwOD06yDs1lj5Pb57svyQpo');
-       
-       var contacts = spreadSheet.getSheetByName("Contacts");
-       var locNumbers = contacts.getRange('B3:B31').getValues();
-         ?>  
-
-   </tbody>
-</table>
-  <br>
-     <br>
-       <br>
-      <input type="submit" style="font-family:Roboto; font-size: 25pt; font-weight:bold;" value="Submit" onclick="submitForm()"> 
-        <div style="font-size:19pt; font-weight:bold; font-family:Roboto; color:rgb(255,0,0);" overflow: hidden; id="message"></div>
-        </br>
-      </br>
-    </br>
-  
-
-
-
-      </form>
-
-
-
-      <script>
-        function submitForm() {
-          var dropdown = document.getElementById('myDropdown');
-          var location = dropdown.value;
-          var lprpu = document.getElementById('lprpu').value;
-          var lproh = document.getElementById('lproh').value;
-          var cheppu = document.getElementById('cheppu').value;
-          var chepoh = document.getElementById('chepoh').value;
-          var ipppu = document.getElementById('ipppu').value;
-          var ippoh = document.getElementById('ippoh').value;
-          google.script.run.processForm(location, lprpu, lproh, cheppu, chepoh, ipppu, ippoh); // Calls Apps Script function
-          document.getElementById('myDropdown').selectedIndex = 0;
-          document.getElementById('lprpu').value = '';
-          document.getElementById('lproh').value = '';          
-          document.getElementById('cheppu').value = '';
-          document.getElementById('chepoh').value = '';
-          document.getElementById('ipppu').value = '';
-          document.getElementById('ippoh').value = '';
-
-          message.innerHTML = 'Success!'
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-          google.script.run.withSuccessHandler(populateDropdown).getDropdownOptions();
-        });
-
-       
-        function populateDropdown(options) {
-          var dropdown = document.getElementById('myDropdown');
-          options.forEach(function(optionText) {
-            var option = document.createElement('option');
-            option.value = optionText;
-            option.textContent = optionText;
-            dropdown.appendChild(option);
-
-
-        });
-        }
-
-        document.addEventListener('submit', function(submitForm) {
-          var lprpu = document.getElementById('lprpu');
-          var lproh = document.getElementById('lproh');
-          var cheppu = document.getElementById('cheppu');
-          var chepoh = document.getElementById('chepoh');
-          var ipppu = document.getElementById('ipppu');
-          var ippoh = document.getElementById('ippoh');
-
-         if (lprpu.value.trim() === '' || lproh.value.trim() === '' || cheppu.value.trim() === '' || chepoh.value.trim() === '' || ipppu.value.trim() === '' || ippoh.value.trim() === '') {
-            alert('Please fill in all required fields.');
-            event.preventDefault(); // Prevent form submission
-  }
-});
-        
-
-      </script>
-    </body>
- </html>
+<div dir="ltr">
+    <div>
+        <div dir="ltr" class="gmail_signature" data-smartmail="gmail_signature">
+            <div dir="ltr">
+                <div dir="ltr">
+                    <div dir="ltr">
+                        <div>Good Day,</div>
+                        <div>
+                            <br>
+                        </div>
+                        <div>Our opening pallet counts for the day are below.</div>
+                        <div>
+                            <br>
+                        </div>
+                        <div>
+                            <table cellspacing="0" cellpadding="0" dir="ltr" style="table-layout:fixed;font-size:10pt;font-family:Arial;width:0px"> 
+                                <colgroup>
+                                    <col width="100">
+                                        <col width="100">
+                                            <col width="100">
+                                                <col width="100">
+                                                    <col width="100">
+                                                       <col width="100">
+                                </colgroup>
+                                <tbody>
+                                    <tr style="height:33px">
+                                    <td style="border-width:3px 2px 2px;border-style:solid;border-color:rgb(230,145,56) rgb(230,145,56) rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:bottom;background-color:rgb(246,178,107);font-family:Roboto;font-size:17pt;font-weight:bold;text-align:center" rowspan="1" colspan="4">Opening Pallet Update</td>
+                                    </tr>
+                                    <tr style="height:46px">
+                                       <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px double rgb(0,0,0);border-left:2px solid rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:bottom;font-family:Roboto;background-color:rgb(252,229,205);font-size:14pt;font-weight:bold;text-align:center">Location</td>
+                                       <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px double rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:bottom;font-family:Roboto;background-color:rgb(252,229,205);font-size:14pt;font-weight:bold;text-align:center">Pooler</td>
+                                       <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px double rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle;font-family:Roboto;background-color:rgb(252,229,205);font-size:12pt;font-weight:bold;text-align:center">Picked Up Yesterday</td>
+                                       <td style="border-right:2px solid rgb(0,0,0);border-bottom:3px double rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:bottom;background-color:rgb(255,217,102);font-family:Roboto;font-size:12pt;font-weight:bold;color:rgb(67,67,67);text-align:center">Pallets On Hand</td>
+                                    </tr>
+                                    <tr style="height:47px">
+                                        <td style="border-right:2px solid rgb(0,0,0);border-bottom:1px solid rgb(0,0,0);border-left:2px solid rgb(0,0,0);overflow:hidden;padding:2px 3px; vertical-align:middle;font-family:Roboto;font-size:23pt;font-weight:bold;color:rgb(67,67,67);text-align:center"><?= Warehouse ?></td>
+                                        <td style="border-right:2px solid rgb(0,0,0);border-bottom:1px solid rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle;font-family:Roboto;font-size:23pt;font-weight:bold;color:rgb(158,51,14);text-align:center">LPR</td>
+                                        <td style="border-right:2px solid rgb(0,0,0);border-bottom:1px solid rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle;font-family:Roboto;font-size:20pt;font-weight:bold;text-align:center"><?= Pickup ?></td>
+                                        <td style="border-right:3px double rgb(0,0,0);border-bottom:3px double rgb(0,0,0);overflow:hidden;padding:2px 3px;vertical-align:middle;background-color:rgb(255,217,102);font-family:Roboto;font-size:20pt;font-weight:bold;text-align:center"><?= Onhand ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br>
+                        </div>
+                        <div>Thank you,</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
